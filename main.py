@@ -5,7 +5,6 @@ import os, bs4, urllib.request
 url = 'https://xkcd.com/'
 os.makedirs('xkcd', exist_ok=True)
 
-print("Grabbing newest XKCD!")
 
 def grabComic(num):
 	print('Attempting to grab latest comic')
@@ -38,23 +37,31 @@ def newestComicNumber():
 		newest = content[num+29:con-1]
 		return int(newest) # Newest number
 	except urllib.error.URLError:
-		print('No internet or other network error.. Exiting')
+		print('Network error; make sure you\'re connected to the internet or that there is no firewall blocking xkcd.')
 		exit()
 
-print('Newest comic number: ' + str(newestComicNumber()) + '\n')
-print('Changing to ./xkcd')
-try:
-	os.chdir('./xkcd')
-	print('Cd\'d properly. Continuing')
-except OSError:
-	print('./xkcd not found')
-	print('Making')
-	os.makedirs(directory)
+def changeDir():
+	print('Changing to ./xkcd')
 	try:
 		os.chdir('./xkcd')
 		print('Cd\'d properly. Continuing')
-	except:
-		print('Cannot change dir to ./xkcd... Exiting')
-		exit()
+	except OSError:
+		print('./xkcd not found')
+		print('Making')
+		os.makedirs(directory)
+		try:
+			os.chdir('./xkcd')
+			print('Cd\'d properly. Continuing')
+		except:
+			print('Cannot change dir to ./xkcd... Exiting')
+			exit()
 
-grabComic(str(newestComicNumber()))
+def main():
+	print("Grabbing newest XKCD!")
+	print('Newest comic number: ' + str(newestComicNumber()) + '\n')
+	changeDir()
+	grabComic(str(newestComicNumber()))
+
+
+if __name__ == "__main__":
+	main()

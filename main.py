@@ -37,7 +37,7 @@ def newestComicNumber():
 		newest = content[num+29:con-1]
 		return int(newest) # Newest number
 	except urllib.error.URLError:
-		print('Network error; make sure you\'re connected to the internet or that there is no firewall blocking xkcd.')
+		print('Network error; make sure you\'re connected to the internet or that there is nothing blocking ', url)
 		exit()
 
 def changeDir():
@@ -57,11 +57,11 @@ def changeDir():
 			exit()
 
 def main():
-	print("Grabbing newest XKCD!")
 	print('Newest comic number: ' + str(newestComicNumber()) + '\n')
+	num = input("What comic number do you want?: ")
 	changeDir()
-	grabComic(str(newestComicNumber()))
+	grabComic(num)
 
 
-if __name__ == "__main__":
+if __name__ == '__main__':
 	main()

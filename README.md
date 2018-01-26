@@ -1,4 +1,5 @@
 # Use
-Just run the python file and it should work! If not, please make an issue
+
+You need Beautifulsoup4 [bs4] for python3
 
 Works on Python3+ [Python 3+ has the request module]

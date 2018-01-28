@@ -1,15 +1,15 @@
 # Grabs some sweet sweet XKCD
 
-import os, bs4, urllib.request
+import os, bs4, urllib.request, sys
+from random import randint
 
 url = 'https://xkcd.com/'
-os.makedirs('xkcd', exist_ok=True)
 
 
 def grabComic(num):
-	print('Attempting to grab latest comic')
+	print('Attempting to grab comic #{}'.format(num))
 	try:
-		page = url + num + '/'
+		page = url + num
 		response = urllib.request.urlopen(page)
 		text = str(response.read())
 		
@@ -40,28 +40,39 @@ def newestComicNumber():
 		print('Network error; make sure you\'re connected to the internet or that there is nothing blocking ', url)
 		exit()
 
-def changeDir():
-	print('Changing to ./xkcd')
+def changeDir(directory):
+	print('Changing to {}'.format(directory))
 	try:
-		os.chdir('./xkcd')
+		os.chdir(directory)
 		print('Cd\'d properly. Continuing')
 	except OSError:
-		print('./xkcd not found')
+		print('{} not found'.format(directory))
 		print('Making')
-		os.makedirs(directory)
-		try:
-			os.chdir('./xkcd')
-			print('Cd\'d properly. Continuing')
-		except:
-			print('Cannot change dir to ./xkcd... Exiting')
-			exit()
+		os.makedirs(directory, exist_ok=True)
+		os.chdir(directory)
 
 def main():
+	directory = 'xkcd'
+	currentArg = 0
+	for arg in sys.argv: # Checks for arguments and sets them
+		if arg == '-d' or arg == '--dir':
+			try:
+				directory = sys.argv[currentArg+1]
+			except IndexError:
+				print('No argument after {}'.format(sys.argv[currentArg]))
+				exit()
+		currentArg += 1
+
 	print('Newest comic number: ' + str(newestComicNumber()) + '\n')
-	num = input("What comic number do you want?: ")
-	changeDir()
-	grabComic(num)
+	num = input("What comic number do you want [Type r for random]?: ")
+	if num == '':
+		num = str(newestComicNumber())
+	changeDir(directory)
+	if num == 'r':
+		n = str(randint(0, newestComicNumber()))
+		grabComic(n)
+	else:
+		grabComic(num)
 
-
-if __name__ == '__main__':
+if __name__ == "__main__":
 	main()

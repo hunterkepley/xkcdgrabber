@@ -19,4 +19,4 @@ Works on Python3+ [Python 3+ has the request module]
 
 ### Known issue
 
-Needs to tell whether the image is a jpg or png, old ones are jpg, new ones are png...
+Needs to tell whether the image is a jpg or png, old ones are jpg, new ones are png... Some old images wont work due to this issue at the moment.

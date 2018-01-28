@@ -51,28 +51,52 @@ def changeDir(directory):
 		os.makedirs(directory, exist_ok=True)
 		os.chdir(directory)
 
-def main():
+def sysArgCheck(): # Deals with system args
 	directory = 'xkcd'
+	comicNumber = ''
 	currentArg = 0
 	for arg in sys.argv: # Checks for arguments and sets them
-		if arg == '-d' or arg == '--dir':
+		if arg == '-h' or arg == '--help':
+			print('\nXKCDGrabber help ---\n\n-h|--help\tDisplays this\n-d|--directory\t-d X changes download dir to X\n-n|--number\t-n X changes comic number to download to X.\n\n')
+			exit()
+		elif arg == '-d' or arg == '--directory':
 			try:
-				directory = sys.argv[currentArg+1]
+				if sys.argv[currentArg+1][0] != '-':
+					directory = sys.argv[currentArg+1]
+				else:
+					print('No argument after {}'.format(sys.argv[currentArg]))
+					exit()
+			except IndexError:
+				print('No argument after {}'.format(sys.argv[currentArg]))
+				exit()
+		elif arg == '-n' or arg == '--number':
+			try:
+				if sys.argv[currentArg+1][0] != '-':
+					comicNumber = sys.argv[currentArg+1]
+				else:
+					print('No argument after {}'.format(sys.argv[currentArg]))
+					exit()
 			except IndexError:
 				print('No argument after {}'.format(sys.argv[currentArg]))
 				exit()
 		currentArg += 1
+	return directory, comicNumber
 
+def main():
+	directory = 'xkcd'
+	comicNumber = ''
+	directory, comicNumber = sysArgCheck()
 	print('Newest comic number: ' + str(newestComicNumber()) + '\n')
-	num = input("What comic number do you want [Type r for random]?: ")
-	if num == '':
-		num = str(newestComicNumber())
+	if comicNumber == '': # If no argument provided [-n]
+		num = input("What comic number do you want [Type r for random]?: ")
+	if comicNumber == '': # If nothing entered for input
+		comicNumber = str(newestComicNumber())
 	changeDir(directory)
-	if num == 'r':
-		n = str(randint(0, newestComicNumber()))
-		grabComic(n)
+	if comicNumber == 'r':
+		comicNumber = str(randint(0, newestComicNumber()))
+		grabComic(comicNumber)
 	else:
-		grabComic(num)
+		grabComic(comicNumber)
 
 if __name__ == "__main__":
 	main()

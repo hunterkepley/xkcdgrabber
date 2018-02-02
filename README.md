@@ -5,11 +5,15 @@ Change your directory using `-d DIR` [default is ./xkcd]
 **[example: -d xkcd]**
 
 
-Change comic number to download using `-n NUM` [default will let you choose *in* the program]
+Change comic number to download using `-n NUM`
 
 **[example: -n 1234]**
 
+Grab random comic using `-r`
+
 Display help using `-h`
+
+No `-n X` will result in the newest comic being grabbed.
 
 # Prerequisites
 

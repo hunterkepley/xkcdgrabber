@@ -11,9 +11,7 @@ Change comic number to download using `-n NUM` [default will let you choose *in*
 
 Display help using `-h`
 
-# Pre-requisites
-
-You need Beautifulsoup4 [bs4] for python3
+# Prerequisites
 
 Works on Python3+ [Python 3+ has the request module]
 

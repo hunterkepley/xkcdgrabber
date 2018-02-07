@@ -16,7 +16,7 @@ which you want]
 
 Display help using `-h`
 
-No `-n X` will result in the newest comic being grabbed.
+Not having `-n X`, `-r`, or `-m` will result in the newest comic being grabbed.
 
 # Prerequisites
 

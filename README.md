@@ -11,6 +11,9 @@ Change comic number to download using `-n NUM`
 
 Grab random comic using `-r`
 
+Grab multiple comics using `-m` [It will prompt you after running with `-m` 
+which you want]
+
 Display help using `-h`
 
 No `-n X` will result in the newest comic being grabbed.

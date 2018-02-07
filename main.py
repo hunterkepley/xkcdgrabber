@@ -54,6 +54,18 @@ def change_dir(directory):
     os.makedirs(directory, exist_ok=True)
     os.chdir(directory)
 
+def multiple_grab(m_first, m_second):
+    i = int(m_first) # For the loop
+    if int(m_second) < int(m_first): # Reverse the numbers if the first is bigger
+        i = int(m_second)
+        t = m_second
+        m_second = m_first
+        m_first = t
+    elif int(m_second) == int(m_first): # If equal, ignore the loop and grab
+        grab_comic(m_first)
+    while i < int(m_second): # Keep downloading until done
+        grab_comic(str(i))
+        i += 1
 
 def parse_cmdline_args():
     parser = ArgumentParser(
@@ -75,25 +87,39 @@ def parse_cmdline_args():
         action='store_true',
         help='Download a random XKCD comic'
     )
+    group.add_argument(
+        '-m', '--multiple',
+        action='store_true',
+        help='Prompts you to enter a range of comics from x to y to download.'
+    )
     return parser.parse_args()
 
 
 def main():
     args = parse_cmdline_args()
 
+    m_first = 0
+    m_second = 0
+
     if args.number:
         comic_number = args.number
     elif args.random:
         print('Grabbing a random comic!')
         comic_number = randint(0, newest_comic_number())
+    elif args.multiple:
+        m_first = input('What is your starting comic?: ')
+        m_second = input('What is the last comic you want?: ')
     else:
         print('Grabbing the newest comic!')
         comic_number = newest_comic_number()
 
     change_dir(args.directory)
 
-    grab_comic(comic_number)
-
+    if args.multiple:
+        multiple_grab(m_first, m_second) 
+    else:
+        grab_comic(comic_number)
+        
 
 if __name__ == "__main__":
     main()

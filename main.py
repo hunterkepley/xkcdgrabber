@@ -27,7 +27,13 @@ def grab_comic(num):
         ti = text.find('ctitle')
         tj = text.find('<ul class="comicNav"')
         title = text[ti + 8:tj - 8]
-        img = '{}.png'.format(title)
+        ty = text.find('<div id="transcript" style="display:') # Grabs the type
+        imtype = text[ty - 6:ty - 2] # of image extension
+        img = '{}.png'.format(title) # Default incase of error below
+        if imtype == '.png':
+            img = '{}.png'.format(title)
+        elif imtype == '.jpg':
+            img = '{}.jpg'.format(title)
         # Download
         print("Downloading image '{}'".format(img))
         urlretrieve(link, img)

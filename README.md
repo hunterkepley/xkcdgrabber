@@ -26,3 +26,6 @@ Not having `-n X`, `-r`, or `-m` will result in the newest comic being grabbed.
 # Prerequisites
 
 Works on Python3+ [Python 3+ has the request module]
+
+
+This project is licensed under the terms of the MIT license. See LICENSE.md for more info
